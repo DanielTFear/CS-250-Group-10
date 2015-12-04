@@ -1,0 +1,69 @@
+package algorithms;
+import java.util.ArrayList;
+public class algorithmMain {
+
+	public boolean m_isMine(int x, int y) {
+		/* @param x gets the x co-ordinate from the minefield
+		 * @param y gets the y co-ordinate from the minefield
+		 * @return returns if the tile is a mine
+		 */
+		return true;
+	}
+
+	public boolean m_isRevealed(int x, int y) {
+		/* @param x gets the x co-ordinate from the minefield
+		 * @param y gets the y co-ordinate from the minefield
+		 * @return returns if the tile is revealed
+		 */
+		return true;
+	}
+
+	public int m_calculateMine(int x, int y) {
+		/* @param x gets the x co-ordinate from the minefield
+		 * @param y gets the y co-ordinate from the minefield
+		 * @returns returns how many mines are adjencent 
+		 */
+		int numberOfMines=0;
+		ArrayList<Boolean> aroundTile = new ArrayList<Boolean>();
+		aroundTile.add(m_isMine(x-1,y+1));
+		aroundTile.add(m_isMine(x,y+1));
+		aroundTile.add(m_isMine(x+1,y+1));
+		aroundTile.add(m_isMine(x+1,y));
+		aroundTile.add(m_isMine(x+1,y-1));
+		aroundTile.add(m_isMine(x,y-1));
+		aroundTile.add(m_isMine(x-1,y-1));
+		aroundTile.add(m_isMine(x-1,y));
+		for (int i = 0; i < aroundTile.size(); i++){
+			if (aroundTile.get(i)== true){
+				numberOfMines++;
+			}
+		}
+		
+		return numberOfMines;
+	}
+
+	public void m_revealArea(int x, int y) {
+		/* @param x gets the x co-ordinate from the minefield
+		 * @param y gets the y co ordinate from the minefield
+		 */
+		if (m_isRevealed(x, y) == true) {
+			return;
+		} else if (m_isMine(x, y) == true) {
+			// m_gameOver();
+			return;
+		} else {
+			m_calculateMine(x, y);
+
+			m_revealArea(x - 1, y + 1);
+			m_revealArea(x, y + 1);
+			m_revealArea(x + 1, y + 1);
+			m_revealArea(x + 1, y);
+			m_revealArea(x + 1, y - 1);
+			m_revealArea(x, y - 1);
+			m_revealArea(x - 1, y - 1);
+			m_revealArea(x - 1, y);
+		}
+
+	}
+
+}
